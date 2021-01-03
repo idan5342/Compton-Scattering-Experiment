@@ -1,0 +1,10 @@
+function f=ReadListOfFiles(folder)
+%folder = pwd;  % or 'D:\my Images\Reema' or wherever...
+filePattern = fullfile(folder, '*.mca*');
+fileList = dir(filePattern);
+filenames={};
+for k=1:length(fileList)
+    temp=fileList(k).name;
+    filenames{k}=temp;
+end
+f=filenames;
