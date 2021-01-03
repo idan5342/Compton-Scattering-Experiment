@@ -1,0 +1,39 @@
+A_0=3700000; %kbq
+t=39.13424658; %years
+I_gamma=85.1*0.01;
+tau=30.07./log(2); %years
+h=2.72;
+Veff=pi()*1.65^2*h; %half of the volume of the scintillator
+sci=SciData(Veff);
+RtoS=(4*14.5^2)/(4.25^2);
+tabledata=[1591.093646	1026.134568	65599.26912	2.88675E-07	667.254	100
+1494.532204	1126.290919	95189.9283	2.88675E-07	808.179	-100
+3808.459286	1402.170288	135543.7186	2.88675E-07	195.705	10
+3797.761681	1543.190722	137332.9798	2.88675E-07	172.384	-10
+1469.630406	718.5799825	59177.87586	2.88675E-07	636.807	110
+1372.339264	1021.722456	54431.95963	2.88675E-07	471.513	-110
+2669.47243	3161.070598	263208.5811	2.88675E-07	1464.275	50
+2628.682555	3973.775718	284500.3341	2.88675E-07	1283.759	-50
+2160.682673	1703.036115	159224.7589	2.88675E-07	1254.514	70
+2057.396758	2129.317397	128339.48	2.88675E-07	811.208	-70
+1751.206507	1484.25731	102192.2279	2.88675E-07	950.715	90
+1635.664736	2055.508771	106190.1645	2.88675E-07	778.775	-90
+];
+N_meas=tabledata(:,3);
+delta_N_meas=tabledata(:,2);
+T=tabledata(:,5);
+delta_T=tabledata(:,4);
+channel_peaks=tabledata(:,1);
+delta_channel=10;%this is arbitrary and might need calculation
+[eff,delta_eff]=Geteff_Day2(channel_peaks,delta_channel);
+cut=((N_meas./eff).*RtoS)./(A_0.*(exp(-t./tau)).*I_gamma.*T.*sci);
+delta_cut=cut.*sqrt(((delta_N_meas./N_meas).^2+(delta_eff./eff).^2));
+angles=tabledata(:,6);
+% xcosx=1+(cosd(angles)).^2;
+Cosx=cosd(angles);
+scatter(angles,cut)
+matr=[];
+matr(:,1)=angles;
+matr(:,2)=0.1/sqrt(12);
+matr(:,3)=cut;
+matr(:,4)=delta_cut;
