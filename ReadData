@@ -1,0 +1,9 @@
+function f=ReadData(folder)
+ListOfFileNames=ReadListOfFiles(folder);
+data=[];
+for i=1:length(ListOfFileNames)
+    adress=folder+ListOfFileNames{i};
+    DataOfFile=ReadFile(adress);
+    data(:,i)=DataOfFile;
+end
+f=data;
