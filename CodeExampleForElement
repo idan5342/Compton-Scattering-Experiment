@@ -1,0 +1,27 @@
+cob=data1(:,3);
+channel=1:8192;
+%plot(channel,cob)
+cob_red=cob(6250:end);
+delta_cob_red=sqrt(cob_red);
+x=6250:8192;
+hold off
+[f,g]=cobFit(x, cob_red, delta_cob_red);
+a1=f.a1;
+a2=f.a2;
+b1=f.b1;
+b2=f.b2;
+c1=f.c1;
+c2=f.c2;
+d1=f.d1;
+d2=f.d2;
+y1 = a1.*exp(-((x-b1)./c1).^2);
+y2 = a2.*exp(-((x-b2)./c2).^2);
+y3=d1+d2.*x;
+plot(x,y1)
+hold on
+plot(x,y2)
+plot(x,y3)
+plot(x,y1+y2+y3)
+area1=trapz(x,y1)
+area2=trapz(x,y2)
+area3=trapz(x,y3)
