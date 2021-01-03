@@ -1,0 +1,20 @@
+function [value,error]=NexpectedCal(A_0,tau,t,T,I_gamma,delta_A0,delta_tau,delta_t,delta_T,delta_I_gamma) 
+%A_0 - activity , tau- lifetime , t-time from creation to measurment
+%T-time of measurement , I_gamma - precentage of energy
+%r-distance from origin to detector , R- radius of detector
+%all the varibles are expected to matrices with the first column being the
+%values and the second being the error.
+r=14.5;
+R=4.25;
+delta_R=0.288;
+temp=exp(-(t./tau));
+eff_area=(R^2)/(4*(r^2));
+Nexpected=A_0.*temp.*T.*I_gamma.*eff_area;
+value=Nexpected;
+reltive_A_0=delta_A0./A_0;
+reltive_I_gamma=delta_I_gamma./I_gamma;
+reltive_T=delta_T./T;
+relative_exp=sqrt((delta_t./tau).^2+(t.*delta_tau./(tau).^2).^2);
+relative_area=(2*(R/r)^2)*sqrt((delta_R/R)^2+(delta_R/r)^2);
+error=value.*sqrt((reltive_A_0).^2+(reltive_I_gamma).^2+(reltive_T).^2+(relative_exp).^2+(relative_area).^2);
+
