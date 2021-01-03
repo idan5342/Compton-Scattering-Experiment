@@ -1,0 +1,14 @@
+function [value,error]=Geteff_Day2(cha,delta_cha)
+a1=20.7661;
+da1=2.328751;
+a2=5.930594;
+da2=0.004181818;
+energy=(cha-a1)./a2;
+delta_energy=(1./a2).*sqrt((delta_cha).^2+(da1).^2+(energy.*da2).^2);
+b1=0.842747;
+db1=0.009311193;
+b2=-0.001076671;
+db2=9.612901e-06;
+eff=b1.*exp(b2.*energy);
+value=eff;
+error=(exp(b2.*energy)).*sqrt((db1).^2+(b1.*db2.*energy).^2+(b1.*b2.*delta_energy).^2);
