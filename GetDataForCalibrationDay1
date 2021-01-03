@@ -1,2 +1,0 @@
-folder="C:\Users\IDAN\Desktop\לימודים שנה ג סמסטר א\מעבדה\Compton scattering\data\data4\Source_Calibration_day1\";
-data1=ReadData(folder); %getting data from folder , data1 is a matrix that contains the measurments in order: [Am , Ba  , Cob  , Cs , Mn , Na]
