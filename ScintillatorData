@@ -1,0 +1,8 @@
+function f=SciData(v_eff)
+rho=1.03;
+N_a=6.022*10^23;
+atomicnum=6;
+massnum=12.0107;
+L=68;
+temp1=1/(4*pi()*(L)^2);
+f=temp1*rho*N_a*(atomicnum/massnum)*v_eff;
