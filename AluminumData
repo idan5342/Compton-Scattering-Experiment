@@ -1,0 +1,8 @@
+function f=AlmData(v_eff)
+rho=2.70;
+N_a=6.022*10^23;
+atomicnum=13;
+massnum=26.981539;
+L=68;
+temp1=1/(4*pi()*(L)^2);
+f=temp1*rho*N_a*(atomicnum/massnum)*v_eff;
