@@ -1,0 +1,13 @@
+%plotting both functions on the same graph Day2
+%first, run CrossSectionDay2
+hold off
+delta_angles=matr(:,2);
+errorbar(angles,cut,delta_cut,delta_cut,delta_angles,delta_angles,'.')
+a=[5.8e-22,3.5,3,-8e-26];
+b=[9.99e-22,5,-4.922e-22];
+x=linspace(-120,120);
+ykn=a(1).*((1+(cosd(x+a(3))).^2)./2).*((1./(1+a(2).*(1-cosd(x+a(3)))).^2).*(1+(((a(2).^2).*(1-cosd(x+a(3))).^2)./((1+(cosd(x+a(3))).^2).*(1+a(2).*(1-cosd(x+a(3))))))))+a(4);
+yt=b(1).*((1+(cosd(x+b(2))).^2)./2)+b(3);
+hold on
+plot(x,ykn)
+plot(x,yt)
