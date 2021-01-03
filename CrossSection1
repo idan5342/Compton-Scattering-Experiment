@@ -1,0 +1,39 @@
+A_0=37000000; %bq
+t=38.8; %years
+I_gamma=85.1*0.01;
+tau=30.07./log(2); %years
+h=2.72;
+Veff=pi()*(0.5^2)*h;
+alm=AlmData(Veff);
+RtoS=(4*14.5^2)/(4.25^2);
+tabledata=[3394	3936.5	141786.8	2.88675E-07	1162.524	30
+2708.94447	4681.664546	143098.9216	2.88675E-07	1716.528	50
+2132.418136	2644.522732	104278.6113	2.88675E-07	1675.559	70
+1718.733982	2133.418738	148275.7555	2.88675E-07	2796.538	90
+1568.507958	3164.811171	176721.2272	2.88675E-07	3469.221	100
+1435.650574	1707.626533	115711.1473	2.88675E-07	2314.228	110
+3191	3361.456	142954.7	2.88675E-07	1012.377	-30
+2483.947225	6184.89466	98340.52934	2.88675E-07	1030.379	-50
+1983.85212	6884.683958	148084.2164	2.88675E-07	2096.839	-70
+1600.125249	1789.248124	77174.12632	2.88675E-07	1309.034	-90
+1461.501193	1330.569693	51850.94831	2.88675E-07	906.397	-100
+1348.257137	860.9651125	35903.33733	2.88675E-07	605.943	-110
+];
+N_meas=tabledata(:,3);
+delta_N_meas=tabledata(:,2);
+T=tabledata(:,5);
+delta_T=tabledata(:,4);
+channel_peaks=tabledata(:,1);
+delta_channel=10;%this is arbitrary and might need calculation
+[eff,delta_eff]=Geteff_Day1(channel_peaks,delta_channel);
+cut=((N_meas./eff).*RtoS)./(A_0.*(exp(-t./tau)).*I_gamma.*T.*alm);
+delta_cut=cut.*sqrt(((delta_N_meas./N_meas).^2+(delta_eff./eff).^2));
+angles=tabledata(:,6);
+% xcosx=1+(cosd(angles)).^2;
+Cosx=cosd(angles);
+scatter(angles,cut)
+matr=[];
+matr(:,1)=angles;
+matr(:,2)=0.1/sqrt(12);
+matr(:,3)=cut;
+matr(:,4)=delta_cut;
